@@ -30,8 +30,8 @@ def send_notice(arduino=False,email=True):
 def send_messege():
     order_queryset = OrderRecord.objects.filter(is_finished=False)
     if order_queryset.exists():
-        account_sid = 'AC8cd8e2afc3f9eb697a82488082ee0d2f'
-        auth_token = 'd336f6cab498c2b6b5b44ba82249a713'
+        account_sid = 'your twilio account sid'
+        auth_token = 'your twilio auth token'
         client = Client(account_sid, auth_token)
         message = client.messages \
             .create(
@@ -44,5 +44,5 @@ def run():
     # BlockingScheduler
     scheduler = BlockingScheduler()
     scheduler.add_job(send_notice, 'cron', day_of_week='0-6', hour=9, minute=30)
-    scheduler.add_job(send_messege, 'cron', day_of_week='0-6', hour=9, minute=50)
+    # scheduler.add_job(send_messege, 'cron', day_of_week='0-6', hour=9, minute=50)
     scheduler.start()

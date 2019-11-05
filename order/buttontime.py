@@ -27,7 +27,7 @@ def is_ordertime():
 
 def is_rechargetime():
     weekday = timezone.localdate().isoweekday()
-    if weekday in (1, 2) and is_ordertime():
+    if weekday in (1, 3) and is_ordertime():
         return True
     else:
         return False
