@@ -16,7 +16,7 @@ class OrderRecord(models.Model):
     price = models.IntegerField(verbose_name='价格', default=10)
     number = models.IntegerField(verbose_name='数量', default=1)
     is_finished = models.IntegerField(default=0, verbose_name='订饭状态', choices=FINISHED_CHOICES)
-    created = CreationDateTimeField(verbose_name='充值时间')
+    created = CreationDateTimeField(verbose_name='订餐时间')
     modified = ModificationDateTimeField(verbose_name='最后修改时间')
 
     class Meta:

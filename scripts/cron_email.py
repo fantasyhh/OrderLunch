@@ -20,6 +20,9 @@ def send_notice(arduino=True,email=True):
             send_mail('今日订饭信息',
                       '今日订饭 十二元{}份  十元{}份 总计饭钱{}元 ,请到{}确认'.format(price_12, price_10, total, admin_site),
                       'shijiahuan2610@163.com', ['baird_shi@amaxchina.com'], fail_silently=False)
+        # auto ensure order
+        order_queryset.update(is_finished=True)
+
     else:
         print('Today no lunch ordered, may be in hoilday !')
 
