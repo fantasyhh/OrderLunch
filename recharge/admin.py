@@ -16,7 +16,7 @@ class RechargeRecordAdmin(admin.ModelAdmin):
     # listdisplay设置要显示在列表中的字段（id字段是Django模型的默认主键）
     list_display = ('id', 'user', 'amount', 'created', 'is_finished')
 
-    list_filter = ('is_finished',)
+    list_filter = ('is_finished','created',)
 
     # action1
     def ensure_recharge(self, request, queryset):

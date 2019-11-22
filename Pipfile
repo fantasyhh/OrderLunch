@@ -15,6 +15,10 @@ django = "*"
 django-cors-headers = "*"
 djangorestframework = "*"
 requests = "*"
+pipfile = "*"
+pyserial = "*"
+ipython = "*"
+ipython3 = "*"
 
 [requires]
 python_version = "3.7"

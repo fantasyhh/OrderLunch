@@ -12,7 +12,7 @@ class OrderRecordAdmin(admin.ModelAdmin):
 
     list_display_links = None
 
-    list_filter = ('is_finished',)
+    list_filter = ('is_finished','created',)
 
     # action1
     def ensure_order(self, request, queryset):

@@ -2,21 +2,21 @@ import serial
 from order.models import OrderRecord
 from django.core.mail import send_mail
 from apscheduler.schedulers.blocking import BlockingScheduler
-from twilio.rest import Client
+#from twilio.rest import Client
 
 
-def send_notice(arduino=False,email=True):
+def send_notice(arduino=True,email=True):
     order_queryset = OrderRecord.objects.filter(is_finished=False)
     if order_queryset.exists():
         price_12 = order_queryset.filter(price=12).count()
         price_10 = order_queryset.filter(price=10).count()
         total = price_12 * 12 + price_10 * 10
         if arduino:
-            ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
+            ser = serial.Serial('/dev/ttyS0', baudrate=9600)
             arduino_notice = "order_{:0>2}_{:0>2}".format(price_10,price_12)
             ser.write(arduino_notice.encode('ascii'))
         if email:
-            admin_site = '192.168.122.99:8080/admin/'
+            admin_site = '192.168.122.98/admin/'
             send_mail('今日订饭信息',
                       '今日订饭 十二元{}份  十元{}份 总计饭钱{}元 ,请到{}确认'.format(price_12, price_10, total, admin_site),
                       'shijiahuan2610@163.com', ['baird_shi@amaxchina.com'], fail_silently=False)
@@ -25,7 +25,7 @@ def send_notice(arduino=False,email=True):
 
 
 
-# """
+"""
 # 管理员email确认,过25分钟再用短信
 def send_messege():
     order_queryset = OrderRecord.objects.filter(is_finished=False)
@@ -38,7 +38,7 @@ def send_messege():
             body="都快要十点了，管理员还没确定订饭信息,赶紧的!",
             from_='+12063124257',
             to='+8618952458263')
-
+"""
 
 def run():
     # BlockingScheduler

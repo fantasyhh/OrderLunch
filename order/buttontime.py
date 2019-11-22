@@ -17,7 +17,7 @@ def is_workday():
 
 def is_ordertime():
     now = timezone.localtime().time()
-    start = datetime.time(8, 30, 0)
+    start = datetime.time(8,30, 0)
     end = datetime.time(9, 30, 0)
     if (start < now < end) and is_workday():
         return True
