@@ -1,6 +1,7 @@
 import serial
 from order.models import OrderRecord
 from django.core.mail import send_mail
+from django.db.models import F
 from apscheduler.schedulers.blocking import BlockingScheduler
 #from twilio.rest import Client
 
@@ -21,7 +22,15 @@ def send_notice(arduino=True,email=True):
                       '今日订饭 十二元{}份  十元{}份 总计饭钱{}元 ,请到{}确认'.format(price_12, price_10, total, admin_site),
                       'shijiahuan2610@163.com', ['baird_shi@amaxchina.com'], fail_silently=False)
         # auto ensure order
-        order_queryset.update(is_finished=True)
+        for obj in order_queryset:
+            if not obj.is_finished:
+                # change money
+                m = obj.user.money
+                m.balance = F('balance') - (obj.price * obj.number)
+                m.save()
+                # change is_finished
+                obj.is_finished = True
+                obj.save()
 
     else:
         print('Today no lunch ordered, may be in hoilday !')
